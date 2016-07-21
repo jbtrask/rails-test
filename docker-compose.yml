@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  db_host:
+  db:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -12,8 +12,21 @@ services:
     build: .
     command: bin/rails server --port 3000 --binding 0.0.0.0
     links:
-      - db_host
+      - db
     ports:
       - "3000:3000"
     volumes:
       - .:/rails-test
+
+  wordpress:
+    image: wordpress
+    ports:
+      - "8080:80"
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_DB_PASSWORD=password
+    links:
+      - db
+    volumes:
+      - ~/.docker-wordpress:/var/www/html  
