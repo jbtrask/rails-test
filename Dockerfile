@@ -17,10 +17,10 @@ RUN apt-get install -y nodejs
 ENV APP_HOME /rails-test
 RUN mkdir $APP_HOME
 
-WORKDIR /tmp
+WORKDIR $APP_HOME
+
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install
 
 ADD . $APP_HOME
-WORKDIR $APP_HOME
